@@ -47,8 +47,13 @@ def notify():
       
   return Response(status=200)
 
+def start(update: Update, context: CallbackContext):
+  global user_chat_id
+  user_chat_id = update.effective_chat.id
+  update.message.reply_text("You will now receive notifications.")
+
 updater = Updater(TELEGRAM_API_TOKEN)
-# Start the bot
+updater.dispatcher.add_handler(CommandHandler("start", start))
 updater.start_polling()
 
 if __name__ == '__main__':
